@@ -32,7 +32,9 @@ class App extends Component {
     axios
       .get(`http://www.omdbapi.com/?t=${this.state.name}&apikey=cd575159`)
       .then(data => {
-        this.setState({ info: data }, () => {console.log(this.state.info)});
+        this.setState({ info: data }, () => {
+          console.log(this.state.info);
+        });
       })
       .catch(err => {
         this.setState({
@@ -42,12 +44,16 @@ class App extends Component {
   };
   render() {
     const info = Object.keys(this.state.info).map((value, idx) => {
-      return (
+      return this.state.info[value].Response === "True" ? (
         <div key={idx}>
           <p>{this.state.info[value].Title}</p>
           <p>{this.state.info[value].Year}</p>
           <p>{this.state.info[value].Rated}</p>
           <p>{this.state.info[value].Released}</p>
+        </div>
+      ) : (
+        <div key={idx}>
+          <p>{this.state.info[value].Error}</p>
         </div>
       );
     });
